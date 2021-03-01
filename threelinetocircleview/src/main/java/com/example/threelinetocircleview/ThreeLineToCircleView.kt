@@ -216,4 +216,12 @@ class ThreeLineToCircleView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity: Activity) : ThreeLineToCircleView {
+            val view : ThreeLineToCircleView = ThreeLineToCircleView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
