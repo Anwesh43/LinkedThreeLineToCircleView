@@ -39,20 +39,13 @@ fun Canvas.drawThreeLineToCircle(scale : Float, w : Float, h : Float, paint : Pa
     val r : Float = Math.min(w, h) / rFactor
     save()
     translate(w / 2, h / 2)
-    for (j in 0..1) {
+    for (j in 0..2) {
         save()
-        scale(1f, 1f - 2 * j)
-        save()
-        translate(-w / 2 + (w / 2 - size) * sf2, -h / 2 + (h / 2 - size) * sf2)
-        drawLine(size * sf3, size * sf3, size * sf1, size * sf2, paint)
-        restore()
+        translate(-w / 2 + (w / 2 - size) * sf2, (-h / 2 + (h / 2 - size) * sf2) * (1 - j))
+        drawLine(size * sf3, size * sf3 * (1 - j), size * sf1, size * sf1 * (1 - j), paint)
         restore()
     }
-    save()
-    translate(-w / 2 + (w / 2 - size) * sf2, 0f)
-    drawLine(size * sf3, size * sf3, size * sf1, size * sf1, paint)
     drawCircle(0f, 0f, r * sf3, paint)
-    restore()
     restore()
 }
 
@@ -85,7 +78,7 @@ class ThreeLineToCircleView(ctx : Context) : View(ctx) {
     data class State(var scale : Float = 0f, var dir : Float = 0f, var prevScale : Float = 0f) {
 
         fun update(cb : (Float) -> Unit) {
-            scale += prevScale * dir
+            scale += scGap * dir
             if (Math.abs(scale - prevScale) > 1) {
                 scale = prevScale + dir
                 dir = 0f
