@@ -191,4 +191,27 @@ class ThreeLineToCircleView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : ThreeLineToCircleView) {
+
+        private val animator : Animator = Animator(view)
+        private val tlc : ThreeLineToCircle = ThreeLineToCircle(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            tlc.draw(canvas, paint)
+            animator.animate {
+                tlc.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            tlc.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
