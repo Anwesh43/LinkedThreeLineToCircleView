@@ -1,0 +1,3 @@
+include ':threelinetocircleview'
+include ':app'
+rootProject.name = "LinkedThreeLineToCircleView"
